@@ -10,7 +10,7 @@ To get this sample working you would need:
 * [Git client](https://git-scm.com/) ([GitHub](https://github.com/) account is recommended)
 * [Visual Studio 2017 Tools for Azure Functions](https://blogs.msdn.microsoft.com/webdev/2017/05/10/azure-function-tools-for-visual-studio-2017/) installed
 
-## Why is your demo different then other blog posts?
+## Why is your demo different than other blog posts?
 
 Great question! The Graph API uses [Gremlin](https://github.com/tinkerpop/gremlin/wiki) syntax to interact with a Graph. I figured it would be nice if we can easily write a REST API that performs simple CRUD operations against a Graph. 
 
@@ -44,7 +44,7 @@ The sample app includes:
  - Follow the steps in [this link](https://docs.microsoft.com/en-us/azure/cosmos-db/create-graph-gremlin-console#create-a-database-account) to create a new Database. No need to follow the other steps in the doc.
   - Follow the steps in [this link](https://docs.microsoft.com/en-us/azure/cosmos-db/create-graph-gremlin-console#add-a-graph) to add a new Graph. No need to follow the other steps in the doc. 
   
-  **Note: The term Graph and Collection interchangable in this blog**
+  **Note: The term Graph and Collection interchangeable in this blog**
 
 2. Copy the URI and one of the keys in the Keys screen of your Cosmos DB Database (click the Keys menu item on the left). You will use them later.
 3. Create a new [Azure Functions App](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-function-app-portal#create-a-function-app).
@@ -61,7 +61,7 @@ Function App by following the steps [here](https://docs.microsoft.com/en-us/azur
 ```javascript
 https://github.com/nirmash/CosmosDBGraphREST.git
 ```
-7. Open GraphFunc.sln (part of the repository you cloned) in Visual Stuio 2017.
+7. Open GraphFunc.sln (part of the repository you cloned) in Visual Studio 2017.
 8. [Publish](https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs#publish-to-azure) the project to your new Function App.
 9. Browse to your test page
 ```javascript
