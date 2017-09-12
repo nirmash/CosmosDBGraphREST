@@ -40,11 +40,37 @@ The sample app includes:
 5. An HTML\ Java Script file used as a test client
 
 # Setting up the sample
-1. Create a new Cosmos DB database (you can use an existing one if you want)-NEED LINK
+1. Create a new Cosmos DB database (you can use an existing one if you want). To create a new Database:
+ - Follow the steps in [this link](https://docs.microsoft.com/en-us/azure/cosmos-db/create-graph-gremlin-console#create-a-database-account) to create a new Database. No need to follow the other steps in the doc.
+  - Follow the steps in [this link](https://docs.microsoft.com/en-us/azure/cosmos-db/create-graph-gremlin-console#add-a-graph) to add a new Graph. No need to follow the other steps in the doc. 
+  
+  **Note: The term Graph and Collection interchangable in this blog**
+
 2. Copy the URI and one of the keys in the Keys screen of your Cosmos DB Database (click the Keys menu item on the left). You will use them later.
-3. Create a new Azure Functions App-NEED LINK
-4. Create 3 new App Settings in your new Function App:
+3. Create a new [Azure Functions App](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-function-app-portal#create-a-function-app).
+4. Create 3 new App Settings in your new 
+Function App by following the steps [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings#platform-features-tab):
   - Endpoint
   - AuthKey
   - databaseName
- 
+5. Fill in the values you copied in step 2 into your Function App Settings:
+  - Endpoint will be the Cosmos DB URI
+  - AuthKey will be the Cosmos DB key
+  - databaseName will be the Cosmos DB Graph name
+6. Clone the sample GitHub repository locally 
+```javascript
+https://github.com/nirmash/CosmosDBGraphREST.git
+```
+7. Open GraphFunc.sln (part of the repository you cloned) in Visual Stuio 2017.
+8. [Publish](https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs#publish-to-azure) the project to your new Function App.
+9. Browse to your test page
+```javascript
+https://{Function App Name}/api/GraphUI
+```
+Your REST API should now be up and running!
+
+# Loading some data into your graph
+SCRIPT WITH SOME DATA
+
+# What's next? 
+TALK ABOUT EASY AUTH ETC AND ADDING MORE APIS
