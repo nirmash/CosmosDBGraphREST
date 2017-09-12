@@ -1,0 +1,75 @@
+﻿{
+  "$schema": "http://json.schemastore.org/proxies",
+  "proxies": {
+    "selectbylabel": {
+      "matchCondition": {
+        "route": "{collection}/selectbylabel/{label}/{value}"
+      },
+      "backendUri": "https://%WEBSITE_HOSTNAME%/api/{collection}/vertex/select/null/{label}/{value}"
+    },
+    "selectedgein": {
+      "matchCondition": {
+        "route": "{collection}/selectedgein/{value}"
+      },
+      "backendUri": "https://%WEBSITE_HOSTNAME%/api/{collection}/edge/select/null/in/{value}"
+    },
+    "selectedgeout": {
+      "matchCondition": {
+        "route": "{collection}/selectedgeout/{value}"
+      },
+      "backendUri": "https://%WEBSITE_HOSTNAME%/api/{collection}/edge/select/null/out/{value}"
+    },
+    "selectcollection": {
+      "matchCondition": {
+        "route": "{collection}/selectcollection"
+      },
+      "backendUri": "https://%WEBSITE_HOSTNAME%/api/{collection}/collection/select/null/null/null"
+    },
+    "dropcollection": {
+      "matchCondition": {
+        "route": "{collection}/dropcollection"
+      },
+      "backendUri": "https://%WEBSITE_HOSTNAME%/api/{collection}/collection/drop/null/null/null"
+    },
+    "addvertex": {
+      "matchCondition": {
+        "route": "{collection}/addvertex/{id}/{label}"
+      },
+      "backendUri": "https://%WEBSITE_HOSTNAME%/api/{collection}/vertex/add/{id}/{label}/null"
+    },
+    "setvertexproperty": {
+      "matchCondition": {
+        "route": "{collection}/setvertexproperty/{id}/{property}/{value}"
+      },
+      "backendUri": "https://%WEBSITE_HOSTNAME%/api/{collection}/vertex/update/{id}/{property}/{value}"
+    },
+    "addedge": {
+      "matchCondition": {
+        "route": "{collection}/addedge/{id1}/{id2}/{value}"
+      },
+      "backendUri": "https://%WEBSITE_HOSTNAME%/api/{collection}/edge/add/{id1}/{id2}/{value}"
+    },
+    "deledge": {
+      "matchCondition": {
+        "route": "{collection}/deledge/{id1}/{id2}/{value}"
+      },
+      "backendUri": "https://%WEBSITE_HOSTNAME%/api/{collection}/edge/del/{id1}/{id2}/{value}"
+    },
+    "delvertex": {
+      "matchCondition": {
+        "route": "{collection}/delvertex/{id}"
+      },
+      "backendUri": "https://%WEBSITE_HOSTNAME%/api/{collection}/vertex/del/{id}/null/null"
+    },
+    "graphuipage": {
+      "matchCondition": {
+        "route": "GraphUI",
+        "methods": [
+          "GET",
+          "POST"
+        ]
+      },
+      "backendUri": "https://%WEBSITE_HOSTNAME%/api/GraphUI"
+    }
+  }
+}

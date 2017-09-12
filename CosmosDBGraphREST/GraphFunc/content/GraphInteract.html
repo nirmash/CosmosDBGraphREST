@@ -1,0 +1,156 @@
+ <head>
+   <title>Test</title>
+   <script type="text/javascript">
+
+var oReq = new XMLHttpRequest();
+var baseUri="https://graphdbcrud.azurewebsites.net/";
+
+oReq.onreadystatechange = function() {
+if (this.readyState == 4 && this.status == 200) {
+        var obj=JSON.parse(JSON.parse(oReq.responseText));
+        document.getElementsByName("txt_results")[0].textContent = JSON.parse(oReq.responseText);
+        controlCleanup();
+    }
+};
+function controlCleanup(){
+    document.getElementById("param1").innerText="Param 1";
+    document.getElementById("param2").innerText="Param 2";
+    document.getElementById("param3").innerText="Param 3";
+
+    document.getElementsByName("txt_param1")[0].value = "";
+    document.getElementsByName("txt_param2")[0].value = "";
+    document.getElementsByName("txt_param3")[0].value = "";
+}
+function makeGraphUrl(){
+    var collection_name = document.getElementsByName("txt_collection_name")[0].value;
+    if(collection_name=="")
+        return;
+    var entity = document.getElementsByName("sel_entity")[0].value;
+    var action =  document.getElementsByName("sel_action")[0].value;
+    var call_uri=baseUri+collection_name+"/";
+    document.getElementById("param1").innerText="";
+    document.getElementById("param2").innerText="";
+    document.getElementById("param3").innerText="";
+
+    switch(action){
+        case "select":
+            if(entity=="collection"){
+                call_uri+="selectcollection";
+            }
+            if(entity=="vertex"){
+                document.getElementById("param1").innerText="Label";
+                document.getElementById("param2").innerText="Value";
+                call_uri+="selectbylabel/"+ document.getElementsByName("txt_param1")[0].value + "/" + document.getElementsByName("txt_param2")[0].value;
+            }
+            if(entity=="edge"){
+                document.getElementById("param1").innerText="Label";
+                document.getElementById("param2").innerText="Value";
+                call_uri+="selectbyedge/"+ document.getElementsByName("txt_param1")[0].value + "/" + document.getElementsByName("txt_param2")[0].value;
+            }
+            break;
+        case "selectedgein":
+            if(entity=="edge"){
+                document.getElementById("param1").innerText="Value";
+                call_uri+="selectedgein/"+ document.getElementsByName("txt_param1")[0].value;
+            }
+            break;
+        case "selectedgeout":
+            if(entity=="edge"){
+                document.getElementById("param1").innerText="Value";
+                call_uri+="selectedgeout/"+ document.getElementsByName("txt_param1")[0].value;
+            }
+            break;
+        case "add":
+            if(entity=="vertex"){
+                document.getElementById("param1").innerText="Id";
+                document.getElementById("param2").innerText="Label";
+                call_uri+="addvertex/"+ document.getElementsByName("txt_param1")[0].value + "/" + document.getElementsByName("txt_param2")[0].value;
+            }
+            if(entity=="edge"){
+                document.getElementById("param1").innerText="Id 1";
+                document.getElementById("param2").innerText="Id 2";
+                document.getElementById("param3").innerText="Edge Label";
+                call_uri+="addedge/"+ document.getElementsByName("txt_param1")[0].value + "/" + document.getElementsByName("txt_param2")[0].value+"/"+document.getElementsByName("txt_param3")[0].value;
+            }
+            if(entity=="vertex_property"){
+                document.getElementById("param1").innerText="Vertex Id";
+                document.getElementById("param2").innerText="Property";
+                document.getElementById("param3").innerText="Value";
+                call_uri+="setvertexproperty/"+ document.getElementsByName("txt_param1")[0].value + "/" + document.getElementsByName("txt_param2")[0].value+"/"+document.getElementsByName("txt_param3")[0].value;
+            }
+            break;
+        case "del":
+            if(entity=="collection"){
+                call_uri+="dropcollection";
+            }
+            if(entity=="vertex"){
+                document.getElementById("param1").innerText="Vertex Id";
+                call_uri+="delvertex/"+ document.getElementsByName("txt_param1")[0].value;
+            }
+            if(entity=="edge"){
+                document.getElementById("param1").innerText="Id 1";
+                document.getElementById("param2").innerText="Id 2";
+                document.getElementById("param3").innerText="Edge Label";
+                call_uri+="deledge/"+ document.getElementsByName("txt_param1")[0].value + "/" + document.getElementsByName("txt_param2")[0].value+"/"+document.getElementsByName("txt_param3")[0].value;
+            }
+            break;        
+    }
+    document.getElementsByName("txt_uri")[0].textContent = call_uri;
+    return call_uri;
+}
+function sendData(call_uri){
+    oReq.open("GET", makeGraphUrl());
+    oReq.send();
+}
+   </script>
+</head>
+<body>
+    <div>
+        CosmosDB Collection name: <input type="text" name="txt_collection_name" value="Persons" onchange="makeGraphUrl()"/>
+    </div>
+    <table>
+        <tr>
+            <td>Entity</td>
+            <td>Action</td>
+            <td id="param1">Param 1</td>
+            <td id="param2">Param 2</td>
+            <td id="param3">Param 3</td>
+        </tr>
+        <tr>
+            <td>
+             <select name="sel_entity" onchange="makeGraphUrl()">
+                 <option value="collection">Collection</option>
+                 <option value="vertex">Vertex</option>
+                 <option value="vertex_property">Vertex Property</option>
+                 <option value="edge">Edge</option>
+             </select>
+            </td>
+            <td>
+             <select name="sel_action" onchange="makeGraphUrl()">
+                 <option value="select">Select</option>
+                 <option value="selectedgein">Select Edge In</option>
+                 <option value="selectedgeout">SelectEdge Out</option>
+                 <option value="add">Add</option>
+                 <option value="del">Delete</option>
+             </select>
+            </td>
+            <td>
+                <input type="text" name="txt_param1"  onchange="makeGraphUrl()" />
+            </td>
+            <td>
+                <input type="text" name="txt_param2"  onchange="makeGraphUrl()" />
+            </td>
+            <td>
+                <input type="text" name="txt_param3"  onchange="makeGraphUrl()" />
+            </td>
+        </tr>
+    </table>
+    <input type="button" value="Execute" onclick="sendData();" />
+    <br/><br/>
+    <div>
+        <textarea name="txt_uri" rows="1" cols="100" readonly="true"></textarea>
+    </div>
+    <div>
+        <textarea name="txt_results" rows="70" cols="100" readonly="true"></textarea>
+    </div>
+</body>

@@ -1,0 +1,54 @@
+{
+  "queries": [
+    {
+      "entity": "collection",
+      "action": "drop",
+      "query": "g.V().drop()"
+    },
+    {
+      "entity": "collection",
+      "action": "select",
+      "query": "g.V()"
+    },
+    {
+      "entity": "vertex",
+      "action": "add",
+      "query": "g.addV('{1}').property('id', '{0}')"
+    },
+    {
+      "entity": "vertex",
+      "action": "update",
+      "query": "g.V('{0}').property('{1}', '{2}')"
+    },
+    {
+      "entity": "vertex",
+      "action": "del",
+      "query": "g.V('{0}').drop()"
+    },
+    {
+      "entity": "vertex",
+      "action": "del",
+      "query": "g.V('{0}').drop()"
+    },
+    {
+      "entity": "vertex",
+      "action": "select",
+      "query": "g.V().has('{1}','{2}')"
+    },
+    {
+      "entity": "edge",
+      "action": "add",
+      "query": "g.V('{0}').addE('{2}').to(g.V('{1}'))"
+    },
+    {
+      "entity": "edge",
+      "action": "del",
+      "query": "g.V('{0}').outE('{2}').where(inV().has('id', '{1}')).drop()"
+    },
+    {
+      "entity": "edge",
+      "action": "select",
+      "query": "g.V().{1}('{2}')"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+    "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "AzureWebJobsDashboard": "",
+    "Endpoint": "",
+    "AuthKey": "",
+    "databaseName": ""
+  }
+}
