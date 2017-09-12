@@ -43,3 +43,8 @@ The sample app includes:
 1. Create a new Cosmos DB database (you can use an existing one if you want)-NEED LINK
 2. Copy the URI and one of the keys in the Keys screen of your Cosmos DB Database (click the Keys menu item on the left). You will use them later.
 3. Create a new Azure Functions App-NEED LINK
+4. Create 3 new App Settings in your new Function App:
+  - Endpoint
+  - AuthKey
+  - databaseName
+ 
