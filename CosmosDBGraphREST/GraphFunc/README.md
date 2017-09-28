@@ -41,36 +41,83 @@ The sample app includes:
 
 # Setting up the sample
 1. Create a new Cosmos DB database (you can use an existing one if you want). To create a new Database:
- - Follow the steps in [this link](https://docs.microsoft.com/en-us/azure/cosmos-db/create-graph-gremlin-console#create-a-database-account) to create a new Database. No need to follow the other steps in the doc.
-  - Follow the steps in [this link](https://docs.microsoft.com/en-us/azure/cosmos-db/create-graph-gremlin-console#add-a-graph) to add a new Graph. No need to follow the other steps in the doc. 
-  
-  **Note: The term Graph and Collection interchangeable in this blog**
+ - Follow the steps in [this link](https://docs.microsoft.com/en-us/azure/cosmos-db/create-graph-gremlin-console#create-a-database-account) to create a new Database. No need to follow the other steps in the doc. 
+  **Note: Graphs will be automatically created if they don't existing within the database. The term Graph and Collection interchangeable in this blog**
 
-2. Copy the URI and one of the keys in the Keys screen of your Cosmos DB Database (click the Keys menu item on the left). You will use them later.
+2. Copy the database name, URI and one of the keys in the Keys screen of your Cosmos DB Database (click the Keys menu item on the left for the URI and key values). You will use them later.
+
 3. Create a new [Azure Functions App](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-function-app-portal#create-a-function-app).
-4. Create 3 new App Settings in your new 
-Function App by following the steps [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings#platform-features-tab):
+
+4. Go to the Platform features tab and create 3 new App Settings in your new 
+Function App by following the steps [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings#platform-features-tab) and [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings#settings):
   - Endpoint
   - AuthKey
   - databaseName
+
 5. Fill in the values you copied in step 2 into your Function App Settings:
   - Endpoint will be the Cosmos DB URI
   - AuthKey will be the Cosmos DB key
   - databaseName will be the Cosmos DB Graph name
-6. Clone the sample GitHub repository locally 
+
+6. [Enable Azure Functions Proxies (currently in preview)](https://docs.microsoft.com/en-us/azure/azure-functions/functions-proxies#enable)
+
+7. Clone the sample GitHub repository locally 
 ```javascript
-https://github.com/nirmash/CosmosDBGraphREST.git
+git clone https://github.com/nirmash/CosmosDBGraphREST.git
 ```
-7. Open GraphFunc.sln (part of the repository you cloned) in Visual Studio 2017.
-8. [Publish](https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs#publish-to-azure) the project to your new Function App.
-9. Browse to your test page
+and browse to the code folder
 ```javascript
-https://{Function App Name}/api/GraphUI
+cd CosmosDBGraphREST\CosmosDBGraphREST
+```
+8. Open GraphFunc.sln (should be in the CosmosDBGraphREST folder) in Visual Studio 2017.
+
+9. Right-click on the GraphFunc solution and select Publish. Click the "Select Existing" radio button and hit the Publish button.  
+
+10. Find the Functions App you created in step 3
+
+11. Browse to your test page
+```javascript
+https://{Function App Name}/GraphUI
 ```
 Your REST API should now be up and running!
 
 # Loading some data into your graph
-SCRIPT WITH SOME DATA
-
+Use the curl commands below or just paste the Urls in a browser to load a bit of data into your graph. In this case, a car brand and car types belonging to this brand. A graph named "cars" will be created in your Comsmos DB database. 
+```javascript
+curl https://{Function App Name}/cars/addvertex/Audi/Brand
+curl https://{Function App Name}/cars/addvertex/A4/Sedan
+curl https://{Function App Name}/cars/addvertex/A6/Sedan
+curl https://{Function App Name}/cars/addvertex/Q5/SUV
+curl https://{Function App Name}/cars/addvertex/Q7/SUV
+curl https://{Function App Name}/cars/addedge/Audi/A4/Sedans
+curl https://{Function App Name}/cars/addedge/Audi/A6/Sedans
+curl https://{Function App Name}/cars/addedge/Audi/Q5/SUVs
+curl https://{Function App Name}/cars/addedge/Audi/Q7/SUVs
+```
+Now to run a couple of queries against your new graph! 
+To see all the items (Vertex) in the graph, type the below in a browser:
+```javascript
+curl https://{Function App Name}/cars/selectcollection
+```
+To see all the cars in the graph that are defined as Sedans:
+```javascript
+https://{Function App Name}/cars/selectedgeout/Sedans
+```
+You will see a JSON string coming back like the below:
+```javascript
+[
+  {
+    "id": "A4",
+    "label": "Sedan",
+    "type": "vertex"
+  },
+  {
+    "id": "A6",
+    "label": "Sedan",
+    "type": "vertex"
+  }
+]
+```
 # What's next? 
-TALK ABOUT EASY AUTH ETC AND ADDING MORE APIS
+This blog suggested a way to take the generic Gremlin query language and use an Azure Function and Azure Functions Proxies to create a REST API that performs CRUD actions against Cosmos DB Graph API collections. 
+There is plenty of information out there about Azure Functions, Azure Functions Proxies and Cosmos DB. Leave me comments or questions and play with the code! 
